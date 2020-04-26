@@ -1,0 +1,39 @@
+body {
+    background: rgb(84, 190, 182);
+}
+
+.login {
+    border: solid 0.2mm black;
+    padding: 20px;
+}
+
+.user {
+    width: 40%;
+    float: left;
+}
+
+.pass {
+    width: 40%;
+}
+
+.empty {
+    height: 0px;
+}
+
+.screen {
+    padding: 50px;
+}
+
+.screen2 {
+    padding: 50px;
+    background: white;
+}
+
+@media only screen and (max-width: 600px) {
+    .screen {
+        padding: 10px;
+    }
+    .empty {
+        height: 50px;
+    }
+}

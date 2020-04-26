@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang = 'en'>
+
+<head>
+    <title>Asset Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="../CSS/dashboard.css">
+    <link rel="stylesheet" href="../CSS/common.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <div class="w3-sidebar w3-bar-block w3-border-right" style="display:none" id="mySidebar">
+        <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+        <hr>
+        <img class="profile" alt= "" src="../Images/user.png">
+        <h1 class="w3-bar-item">Dashboard</h1>
+
+        <a href="#" class="w3-bar-item w3-button">All Assets</a>
+        <a href="dash_emp.html" class="w3-bar-item w3-button">Employees</a>
+
+        <a href="dash_sup.html" class="w3-bar-item w3-button">Suppliers</a>
+        <hr>
+        <a href="dash_sup.html" class="w3-bar-item w3-button">Log Out</a>
+    </div>
+
+    <!-- Page Content -->
+    <div class="PageContent">
+
+        <div class="w3-container w3-teal">
+            <button style="float: left; padding: 20px;;" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+
+            <h1>Admin</h1>
+        </div>
+
+
+
+        <div class="w3-container">
+            <h2>All Assets</h2>
+            <button id="myBtn">New Asset  +</button>
+            <hr>
+        </div>
+
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+
+                <table>
+                    <tr>
+                        <td>Asset Name</td>
+                        <th><input class="selectable"></th>
+                    </tr>
+                    <tr>
+                        <td>Asset Price</td>
+                        <th><input class="selectable"></th>
+                    </tr>
+                    <tr>
+                        <td>Asset Category</td>
+                        <th>
+                            <select class="selectable" name="cat_select">
+                                <option value="Cat_1">Cat_1</option>
+                                <option value="Cat_2">Cat_2</option>
+                                <option value="Cat_3">Cat_3</option>
+                                <option value="Cat_4">Cat_4</option>
+                                <option value="None" selected>None</option>
+                              </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Assign Owner</td>
+                        <th>
+                            <select class="selectable" name="owner_select">
+                                <option value="Owner_1">Owner_1</option>
+                                <option value="Owner_2">Owner_2</option>
+                                <option value="Owner_3">Owner_3</option>
+                                <option value="Owner_4">Owner_4</option>
+                                <option value="None" selected>None</option>
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Supplier</td>
+                        <th>
+                            <select class="selectable" name="Supplier_select">
+                                    <option value="Supplier_1">Supplier_1</option>
+                                    <option value="Supplier_2">Supplier_2</option>
+                                    <option value="None" selected>None</option>
+                            </select>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Display Picture</td>
+                        <th><input type="file" id="img" name="img" accept="image/*"></th>
+                    </tr>
+                </table>
+
+                <hr>
+                <button>Add</button>
+
+            </div>
+
+        </div>
+
+
+        <table id="customers">
+            <tr>
+                <th>S.no</th>
+                <th>Asset Name</th>
+                <th>Category</th>
+                <th>Owner Status</th>
+                <th>Action</th>
+            </tr>
+
+            <!-- Asset 1 -->
+            <tr>
+                <td>1</td>
+                <td>Table</td>
+                <td>Furniture</td>
+                <td>Danorza</td>
+                <td>
+                    <button type="button" class="collapsible">Details</button>
+                    <div class="content">
+                        <table>
+                            <tr>
+                                <th>Product_Image</th>
+                                <td><img class="display" src="../Images/1213_pic.jpg" alt="Bar_Code"></td>
+                            </tr>
+                            <tr>
+                                <th>Category_ID</th>
+                                <td>123</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>blah blah blah blah blah</td>
+                            </tr>
+                            <tr>
+                                <th>Expiry Date</th>
+                                <td>12/03/2020</td>
+                            </tr>
+                            <tr>
+                                <th>Supplier</th>
+                                <td>Dheeraj</td>
+                            </tr>
+                            <tr>
+                                <th>Price</th>
+                                <td>55$</td>
+                            </tr>
+                            <tr>
+                                <th>Bar Code</th>
+                                <td><img class="bar" src="../Images/asset_id_1213.png" alt="Bar_Code"></td>
+                            </tr>
+                            <tr>
+                                <th><button>Reassign Owner</button></th>
+                                <td>
+                                    <select class="selectable" name="owner_select">
+                                        <option value="Owner_1">Owner_1</option>
+                                        <option value="Owner_2">Owner_2</option>
+                                        <option value="Owner_3">Owner_3</option>
+                                        <option value="Owner_4">Owner_4</option>
+                                        <option value="None" selected>None</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <button type="button" class="collapsible">History</button>
+                    <div class="content">
+                        <h3>Owners</h3>
+                        <table>
+                            <tr>
+                                <th>Employee Id</th>
+                                <th> Name</th>
+                                <th>Check-In Time</th>
+                                <th>Check-Out Time</th>
+                            </tr>
+                            <tr>
+
+                                <td>1</td>
+                                <td>Danorza</td>
+                                <td>2nd April 2020</td>
+                                <td>Current Owner</td>
+
+                            </tr>
+                            <tr>
+
+                                <td>6</td>
+                                <td>Danielle</td>
+                                <td>2nd Oct 2019</td>
+                                <td>4th Oct 2019</td>
+
+                            </tr>
+                            <tr>
+
+                                <td>11</td>
+                                <td>Danaasa</td>
+                                <td>1st Jan 2019</td>
+                                <td>2nd April 2019</td>
+
+                            </tr>
+                        </table>
+                    </div>
+                    <button>Delete</button>
+                </td>
+            </tr>
+
+            <!-- Asset 2 -->
+            <tr>
+                <td>1</td>
+                <td>Bottle</td>
+                <td>Utilities</td>
+                <td>Karthik Chandra</td>
+                <td>
+                    <button type="button" class="collapsible">Details</button>
+                    <div class="content">
+                        <table>
+
+                            <tr>
+                                <th>Product_Image</th>
+                                <td><img class="display" src="../Images/bottle.jpg" alt="Bar_Code">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Category_ID</th>
+                                <td>123</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>Drink with This</td>
+                            </tr>
+                            <tr>
+                                <th>Expiry Date</th>
+                                <td>12/03/2020</td>
+                            </tr>
+                            <tr>
+                                <th>Supplier</th>
+                                <td>Karthik</td>
+                            </tr>
+                            <tr>
+                                <th>Price</th>
+                                <td>12$</td>
+                            </tr>
+                            <tr>
+                                <th>Bar Code</th>
+                                <td><img class="bar" src="../Images/baar_2.png" alt="Bar_Code"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <button type="button" class="collapsible">History</button>
+                    <div class="content">
+                        <h3>Owners</h3>
+                        <table>
+                            <tr>
+                                <th>Employee Id</th>
+                                <th> Name</th>
+                                <th>Check-In Time</th>
+                                <th>Check-Out Time</th>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>Karthik Chandra</td>
+                                <td>2nd April 2020</td>
+                                <td>Current Owner</td>
+
+                            </tr>
+                        </table>
+                    </div>
+                    <button>Delete</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="../Javascript/dashboard.js"></script>
+</body>
+
+</html>
