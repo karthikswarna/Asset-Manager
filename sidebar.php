@@ -3,9 +3,10 @@
         <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
         
         <hr>
-        <img class="profile" alt= "" src="./imgs/user.png">
+        <img class="profile" alt= "" src="./Images/user.png">
         <h1 class="w3-bar-item">Dashboard</h1>
-        <a href="dashboard.php" class="w3-bar-item w3-button">All Assets</a>
+        <a href="dashboard.php" class="w3-bar-item w3-button">All assigned assets</a>
+        <a href="prod_dashboard.php" class="w3-bar-item w3-button">Inventory</a>
         <a href="emp_dashboard.php" class="w3-bar-item w3-button">Employees</a>
         <a href="sup_dashboard.php" class="w3-bar-item w3-button">Suppliers</a>
         <hr>

@@ -1,7 +1,10 @@
 <?php
 // Main page for assigning assets and viewing all ownerships.
 
-session_start();
+if(!isset($_SESSION))
+{
+    session_start();
+}
  
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
@@ -57,7 +60,7 @@ $emp_query = $db_conn->prepare($emp_select);
         <div class="w3-container w3-teal">
             <button style="float: left; padding: 20px;;" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
 
-            <h1>Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
+            <h1 style="margin-top:1%">Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
         </div>
         
         <div class="w3-container">
@@ -154,8 +157,8 @@ $emp_query = $db_conn->prepare($emp_select);
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Assign asset</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>

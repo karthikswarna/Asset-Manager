@@ -16,6 +16,7 @@
     {
         require_once("config.php");
         require_once("dashboard.php");
+
         $select_stmt = "SELECT DISTINCT p.Name, cat.Category_name, e.Name as emp_name, p.Image, p.Description, c.Barcode, a.Expiry_date
                         FROM ((((checkouts as c
                         INNER JOIN employee as e ON e.Employee_ID = c.Employee_ID)
@@ -36,7 +37,7 @@
     }
 ?>
 
-<table id="customers">
+        <table id="customers">
             <thead class="text-center">
                 <th>S.no</th>
                 <th>Asset Name</th>
@@ -67,7 +68,9 @@
                                 <table>
                                     <tr>
                                         <th>Product Image</th>
-                                        <td><img class="display" src="data:image/jpeg;base64, <?= base64_encode($row['Image']) ?>" alt=<?php echo "Image of " . $row['Name']; ?>></td>
+                                        <td>
+                                            <img class="display" src="<?php echo "Uploads/" . $row['Image'] ?>" alt=<?php echo "Image of " . $row['Name']; ?>>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <th>Barcode</th>
@@ -84,7 +87,16 @@
                                     <tr>
                                         <th>Expiry Date</th>
                                         <td>
-                                            <?php echo $row['Expiry_date'];?>
+                                            <?php 
+                                                if(empty(trim($row['Expiry_date'])))
+                                                {
+                                                    echo "Not applicable";
+                                                }
+                                                else
+                                                {
+                                                    echo $row['Expiry_date'];
+                                                }
+                                            ?>
                                         </td>
                                     </tr>
                                     <!-- <tr>
@@ -119,19 +131,37 @@
                                         <?php
                                             $barcode = $row['Barcode'];
                                             $select_query2->execute();
-                                            $rows2 = $select_query2->fetchAll(PDO::FETCH_ASSOC);
-                                            $j = 0;
-                                            foreach($rows2 as $row2): ?>
-                                                <tr>
-                                                    <td><?php echo ++$j; ?></td>
-                                                    <td><?php echo $row2['Name']; ?></td>
-                                                    <td><?php echo $row2['checkout_date']; ?></td>
-                                                    <td>
-                                                        <?php if(empty(trim($row2['checkin_date']))){echo "Current Owner";}
-                                                                else{echo $row2['checkin_date'];} ?>
-                                                    </td>
-                                                </tr>
-                                        <?php endforeach; ?>
+                                            if($select_query2->rowCount() == 0)
+                                            {
+                                                echo "<td>-</td>";
+                                                echo "<td>-</td>";
+                                                echo "<td>-</td>";
+                                                echo "<td>-</td>";
+                                            }
+                                            else
+                                            {
+                                                $rows2 = $select_query2->fetchAll(PDO::FETCH_ASSOC);
+                                                $j = 0;
+                                                foreach($rows2 as $row2): ?>
+                                                    <tr>
+                                                        <td><?php echo ++$j; ?></td>
+                                                        <td><?php echo $row2['Name']; ?></td>
+                                                        <td><?php echo $row2['checkout_date']; ?></td>
+                                                        <td>
+                                                            <?php 
+                                                                if(empty(trim($row2['checkin_date'])))
+                                                                {
+                                                                    echo "Current Owner";
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo $row2['checkin_date'];
+                                                                }
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach;
+                                            } ?>
                                     </tbody>
                                 </table>
                             </div>

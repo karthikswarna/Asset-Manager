@@ -1,5 +1,5 @@
 <?php
-
+// Export login validation into different file, currently in index.php
 require_once("conf.php");
 
 $u_email = $_POST['u_email'];
