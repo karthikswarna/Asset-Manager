@@ -37,9 +37,9 @@ include("config.php");
     <!-- Page Content -->
     <div class="PageContent">
         <div class="w3-container w3-teal">
-            <button style="float: left; padding: 20px;;" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+            <button style="float: left; padding: 20px;;" id="navLink" class="w3-button w3-teal w3-xlarge">☰</button>
 
-            <h1>Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
+            <h1 style="margin-top:1%">Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
         </div>
 
         <div class="w3-container">
@@ -54,36 +54,36 @@ include("config.php");
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add new Employee</h5>
+                    <h5 class="modal-title">Add new Employee</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <form method="POST" name="employee_form" action="add_employee.php" id="log" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="emp_name">Full Name </label>
+                <form method="POST" name="employee_form" action=<?php echo htmlspecialchars("add_employee.php") ?> id="log" enctype="multipart/form-data">
+                    <div class="form-group required">
+                        <label for="emp_name" class="control-label">Full Name </label>
                         <input id="emp_name" type="text" name="emp_name" value="" placeholder="Enter employee's Name" required class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label for="emp_dept">Department </label>
+                    <div class="form-group required">
+                        <label for="emp_dept" class="control-label">Department </label>
                         <input id="emp_dept" type="text" name="emp_dept" value="" placeholder="Enter the department" required class="form-control">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="emp_mail">E-mail  </label>
+                    <div class="form-group required">
+                        <label for="emp_mail" class="control-label">E-mail  </label>
                         <input id="emp_mail" type="email" name="emp_mail" value="" placeholder="Enter E-mail" required class="form-control">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="emp_phn1">Work phone  </label>
+                    <div class="form-group required">
+                        <label for="emp_phn1" class="control-label">Work phone  </label>
                         <input id="emp_phn1" type="text" name="emp_phn1" value="" placeholder="Enter work phone" required class="form-control">
                     </div>
                     
                     <div class="form-group">
                         <label for="emp_phn2">Personal phone  </label>
-                        <input id="emp_phn2" type="text" name="emp_phn2" value="" placeholder="Enter personal phone" required class="form-control">
+                        <input id="emp_phn2" type="text" name="emp_phn2" value="" placeholder="Enter personal phone" class="form-control">
                     </div>
                     
                     <div class="form-group">
@@ -91,9 +91,13 @@ include("config.php");
                         <input id="emp_img" type="file" name="emp_img" value="" accept="image/*" placeholder="Upload the photo" class="form-control">
                     </div>
                     
+                    <div class="form-group required">
+                        <label class="control-label"></label>
+                        <span>Required</span>
+                    </div>
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Add New Employee</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>

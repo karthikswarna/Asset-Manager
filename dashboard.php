@@ -46,6 +46,7 @@ $emp_query = $db_conn->prepare($emp_select);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="./CSS/dashboard.css">
     <link rel="stylesheet" href="./CSS/common.css">
 </head>
@@ -58,7 +59,7 @@ $emp_query = $db_conn->prepare($emp_select);
     <!-- Page Content -->
     <div class="PageContent">
         <div class="w3-container w3-teal">
-            <button style="float: left; padding: 20px;;" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+            <button style="float: left; padding: 20px;;" id="navLink" class="w3-button w3-teal w3-xlarge">☰</button>
 
             <h1 style="margin-top:1%">Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
         </div>
@@ -75,17 +76,17 @@ $emp_query = $db_conn->prepare($emp_select);
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Assign Assets</h5>
+                    <h5 class="modal-title">Assign Assets</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 
-                <form method="POST" name="assign_form" action="assign_asset.php" id="log" enctype="multipart/form-data">
+                <form method="POST" name="assign_form" action="<?php echo htmlspecialchars("add_assign.php");?>" id="log" enctype="multipart/form-data">
                     
                     <div class="form-group">
                         <label> Select the Category </label>
-                        <select class="form-control" id="s1" onchange="AjaxFunction()" name="category" required>
+                        <select id="s1" onchange="AjaxFunction()" name="category" required class="form-control">
                             <option value="0" selected>All Categories</option>
                             <?php
                                 $cat_query->execute();
@@ -98,10 +99,10 @@ $emp_query = $db_conn->prepare($emp_select);
                                         <?php endforeach;
                                     }
                                 }
-                                else
-                                { ?>
-                                    <option value="None">None</option>
-                          <?php }
+                                // else
+                                // {
+                                //     echo "<option value=''>None</option>";
+                                // }
 
                                 $cat_query->closeCursor();
                             ?>
@@ -109,8 +110,9 @@ $emp_query = $db_conn->prepare($emp_select);
                     </div>
 
                     <div class="form-group">
-                        <label> Select the Product </label>
-                        <select class="form-control" id="s2" name="product" required>
+                        <label> Select the Product &nbsp </label>
+                        <span style="font-size:14px" class="fa fa-question-circle" data-toggle='tooltip' title="Only available products from the selected category are shown here." aria-hidden="true"></span>
+                        <select id="s2" name="product" required class="form-control">
                             <?php
                                 $prod_query->execute();
                                 if($prod_query->rowCount() > 0)
@@ -124,7 +126,7 @@ $emp_query = $db_conn->prepare($emp_select);
                                 }
                                 else
                                 { ?>
-                                    <option value="None">None</option>
+                                    <option value="">Choose</option>
                           <?php }
 
                                 $cat_query->closeCursor();
@@ -133,8 +135,9 @@ $emp_query = $db_conn->prepare($emp_select);
                     </div>
 
                     <div class="form-group">
-                        <label> Select the Assignee </label>
-                        <select class="form-control" name="assignee" required>
+                        <label> Select the Assignee &nbsp </label>
+                        <span style="font-size:14px" class="fa fa-question-circle" data-toggle='tooltip' title="Didn't find the right employee? Considering adding the employee record by going into Employees tab." aria-hidden="true"></span>
+                        <select name="assignee" required class="form-control">
                             <?php
                                 $emp_query->execute();
                                 if($emp_query->rowCount() > 0)
@@ -148,7 +151,7 @@ $emp_query = $db_conn->prepare($emp_select);
                                 }
                                 else
                                 { ?>
-                                    <option value="None">None</option>
+                                    <option value="">Choose</option>
                           <?php }
 
                                 $cat_query->closeCursor();
@@ -158,7 +161,6 @@ $emp_query = $db_conn->prepare($emp_select);
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Assign asset</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>

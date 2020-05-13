@@ -25,6 +25,11 @@
     padding: 8px;
 }
 
+.form-group.required .control-label:after
+{
+    content:"*";
+    color:red;
+}
 
 /* 
 #customers tr:nth-child(even) {

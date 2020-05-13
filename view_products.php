@@ -45,7 +45,7 @@
 
             <tbody class="text-center">
                 <?php $i = 0; foreach($products as $product): ?>
-                    <tr>
+                    <tr id="<?php echo $product['Product_ID'] ?>">
                         <td>
                             <?php echo ++$i ; ?>
                         </td>
@@ -105,15 +105,47 @@
                             </div>
 
                             <button>Update</button>
-                            <button>Delete</button>
+                            <button class="myBtn2">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <div id="myModal2" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="yesBtn" class="btn btn-primary">Yes</button>
+                    <button type="button" id="noBtn" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal3" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Product deleted successfully!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="okBtn" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="./Javascript/dashboard.js"></script>
+    <script src="./Javascript/prod_dashboard.js"></script>
+    <script src="./Javascript/sidebar.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
     <script>
         $('#prod_cat').change(function ()

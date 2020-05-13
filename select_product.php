@@ -3,7 +3,7 @@
 
     @$cat_id = $_GET['cat_id'];
 
-    if(!is_numeric($cat_id))
+    if(!isset($cat_id) || !is_numeric($cat_id))
     {
         echo "Data Error";
         exit;

@@ -45,7 +45,7 @@ var noBtn = document.getElementById("noBtn");
 var okBtn = document.getElementById("okBtn");
 var btns = document.getElementsByClassName("myBtn2");
 
-// When the user clicks on "checkin" button, open the modal
+// When the user clicks on "delete" button, open the modal
 var openModal = function()
 {
     modal2.style.display = "block";
@@ -70,7 +70,7 @@ var openModal = function()
             console.log("XHR error..!");
         }
 
-        xhr.open("GET", "delete_assign.php?id=" + id + "&sid=" + Math.random(), true);
+        xhr.open("GET", "delete_employee.php?id=" + id + "&sid=" + Math.random(), true);
         xhr.send();
 
     }, false);

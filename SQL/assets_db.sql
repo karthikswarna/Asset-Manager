@@ -3,12 +3,13 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2020 at 10:48 PM
+-- Generation Time: May 13, 2020 at 06:30 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
+SET GLOBAL TRANSACTION ISOLATION LEVEL READ COMMITTED;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,6 +22,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `assets_db`
 --
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `checkoutAsset` (IN `barcode` VARCHAR(50), IN `employee_id` INT)  BEGIN
+     UPDATE asset
+     SET Availability = false
+     WHERE Barcode = barcode;
+     
+     INSERT INTO checkouts(Employee_ID, Barcode, checkin_date, checkout_date)
+     VALUES (employee_id, barcode, NULL, now());
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectAsset` (IN `product_id` INT)  BEGIN
+     SELECT Barcode
+     FROM asset
+     WHERE Product_ID = product_id AND Availability = true
+     LIMIT 1;
+END$$
+
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -40,17 +63,22 @@ CREATE TABLE `asset` (
 --
 
 INSERT INTO `asset` (`Barcode`, `Product_ID`, `Availability`, `Expiry_date`) VALUES
-('IITT-7-Chairs-1', 7, 1, NULL),
+('IITT-13-Water Bottle-1', 13, 1, NULL),
+('IITT-13-Water Bottle-2', 13, 1, NULL),
+('IITT-13-Water Bottle-3', 13, 1, NULL),
+('IITT-13-Water Bottle-4', 13, 1, NULL),
+('IITT-13-Water Bottle-5', 13, 1, NULL),
+('IITT-7-Chairs-1', 7, 0, NULL),
 ('IITT-7-Chairs-2', 7, 1, NULL),
 ('IITT-7-Chairs-3', 7, 1, NULL),
 ('IITT-7-Chairs-4', 7, 1, NULL),
 ('IITT-7-Chairs-5', 7, 1, NULL),
 ('IITT-HPPavilion-1', 1, 0, NULL),
 ('IITT-HPPavilion-2', 1, 0, NULL),
-('IITT-HPPavilion-3', 1, 0, NULL),
-('IITT-HPPavilion-4', 1, 1, NULL),
+('IITT-HPPavilion-3', 1, 1, NULL),
+('IITT-HPPavilion-4', 1, 0, NULL),
 ('IITT-QuickHeal-1', 3, 0, '2021-07-30'),
-('IITT-Table-1', 2, 0, NULL),
+('IITT-Table-1', 2, 1, NULL),
 ('IITT-Table-10', 2, 1, NULL),
 ('IITT-Table-2', 2, 1, NULL),
 ('IITT-Table-3', 2, 1, NULL),
@@ -80,7 +108,10 @@ INSERT INTO `category` (`Category_ID`, `Category_name`) VALUES
 (1, 'computers'),
 (2, 'tables'),
 (3, 'software'),
-(6, 'Chair');
+(6, 'Chair'),
+(7, 'Movable'),
+(8, 'Immovable'),
+(9, 'Utensils');
 
 -- --------------------------------------------------------
 
@@ -102,10 +133,19 @@ CREATE TABLE `checkouts` (
 
 INSERT INTO `checkouts` (`Check_ID`, `Employee_ID`, `Barcode`, `checkin_date`, `checkout_date`) VALUES
 (2, 2, 'IITT-QuickHeal-1', NULL, '2020-04-26 14:06:49'),
-(3, 1, 'IITT-HPPavilion-1', NULL, '2020-04-26 19:15:06'),
-(4, 1, 'IITT-Table-1', NULL, '2020-04-26 19:16:20'),
-(5, 2, 'IITT-HPPavilion-2', NULL, '2020-04-26 19:17:18'),
-(6, 3, 'IITT-HPPavilion-3', NULL, '2020-04-27 20:12:27');
+(3, 1, 'IITT-HPPavilion-1', '2020-05-08 01:22:02', '2020-04-26 19:15:06'),
+(4, 1, 'IITT-Table-1', '2020-05-13 09:23:46', '2020-04-26 19:16:20'),
+(5, 2, 'IITT-HPPavilion-2', '2020-05-10 20:42:52', '2020-04-26 19:17:18'),
+(6, 3, 'IITT-HPPavilion-3', '2020-05-07 23:48:47', '2020-04-27 20:12:27'),
+(7, 12, 'IITT-7-Chairs-1', '2020-05-07 23:27:40', '2020-05-07 18:55:35'),
+(8, 12, 'IITT-7-Chairs-2', '2020-05-07 23:23:44', '2020-05-07 23:23:38'),
+(9, 12, 'IITT-HPPavilion-4', NULL, '2020-05-07 23:48:26'),
+(10, 12, 'IITT-HPPavilion-1', '2020-05-08 09:25:02', '2020-05-08 01:29:25'),
+(11, 1, 'IITT-Table-10', '2020-05-08 09:23:12', '2020-05-08 09:22:53'),
+(12, 3, 'IITT-7-Chairs-1', NULL, '2020-05-08 09:24:37'),
+(13, 2, 'IITT-Table-10', '2020-05-13 09:16:33', '2020-05-10 23:03:26'),
+(14, 2, 'IITT-HPPavilion-1', NULL, '2020-05-11 16:03:52'),
+(15, 1, 'IITT-HPPavilion-2', NULL, '2020-05-12 19:38:58');
 
 -- --------------------------------------------------------
 
@@ -131,7 +171,8 @@ INSERT INTO `employee` (`Employee_ID`, `Name`, `Department`, `Email`, `Work_phon
 (1, 'Dheeraj', 'Computer Science', 'cs17b028@iittp.ac.in', '408-369', NULL, NULL),
 (2, 'Karthik Chandra', 'Computer Science', 'cs17b026@iittp.ac.in', '408-370', NULL, NULL),
 (3, 'Rohith', 'Electrical engineering', 'ee17b024@iittp.ac.in', '156-547', '7984658942', NULL),
-(12, 'Kedar Krishna', 'Mechanical engineering', 'me17b014@iittp.ac.in', '654-654', '6654831465', '20200501223825.jpg');
+(12, 'Kedar Krishna', 'Mechanical engineering', 'me17b014@iittp.ac.in', '654-654', '6654831465', '20200501223825.jpg'),
+(20, 'Pavan', 'Electrical Engineering', 'EE17B003@iittp.ac.in', '80746-254-707', '7895641231', NULL);
 
 -- --------------------------------------------------------
 
@@ -156,7 +197,8 @@ INSERT INTO `product` (`Product_ID`, `Category_ID`, `Name`, `Description`, `Tota
 (1, 1, 'HP Pavilion Laptop', 'HP Pavilion Laptop with 1TB storage and 16GB RAM', 4, 'HPPavilion.jpg'),
 (2, 2, 'Damro Table', 'A Table provided by Damro furnitures made up of teak', 10, 'Table.jpg'),
 (3, 3, 'Quick Heal Pro', 'An Anti-virus program to protect the computers from viruses', 1, 'QuickHealPro.jpg'),
-(7, 6, 'Chairs', 'Chairs to sit', 5, '20200501170258.jpg');
+(7, 6, 'Chairs', 'Chairs to sit', 5, '20200501170258.jpg'),
+(13, 9, 'Water Bottle', 'Drink water in this', 5, '20200513180326.jpg');
 
 -- --------------------------------------------------------
 
@@ -178,7 +220,8 @@ CREATE TABLE `suppliedproduct` (
 --
 
 INSERT INTO `suppliedproduct` (`Supply_ID`, `Supplier_ID`, `Product_ID`, `Date_supplied`, `Quantity_supplied`, `Price`) VALUES
-(2, 1, 7, '2020-05-01', 5, 2500);
+(2, 1, 7, '2020-05-01', 5, 2500),
+(8, 1, 13, '2020-05-13', 5, 500);
 
 -- --------------------------------------------------------
 
@@ -285,31 +328,31 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `Category_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Category_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `checkouts`
 --
 ALTER TABLE `checkouts`
-  MODIFY `Check_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Check_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `Employee_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `Employee_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `Product_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `Product_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `suppliedproduct`
 --
 ALTER TABLE `suppliedproduct`
-  MODIFY `Supply_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `Supply_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `supplier`

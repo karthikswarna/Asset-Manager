@@ -37,9 +37,9 @@ include("config.php");
     <!-- Page Content -->
     <div class="PageContent">
         <div class="w3-container w3-teal">
-            <button style="float: left; padding: 20px;;" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+            <button style="float: left; padding: 20px;;" id="navLink" class="w3-button w3-teal w3-xlarge">☰</button>
 
-            <h1>Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
+            <h1 style="margin-top:1%">Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
         </div>
 
         <div class="w3-container">
@@ -54,31 +54,30 @@ include("config.php");
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add new Supplier</h5>
+                    <h5 class="modal-title">Add new Supplier</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
 
-                <form method="POST" name="supplier_form" action="add_supplier.php" id="log" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="supp_name">Supplier Name</label>
+                <form method="POST" name="supplier_form" action=<?php echo htmlspecialchars("add_supplier.php") ?> id="log" enctype="multipart/form-data">
+                    <div class="form-group required">
+                        <label for="supp_name" class="control-label">Supplier Name </label>
                         <input id="supp_name" type="text" name="supp_name" value="" placeholder="Enter supplier's Name" required class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label for="supp_mail">Email</label>
-                        <input id="supp_mail" type="text" name="supp_mail" value="" placeholder="Enter E-mail" required class="form-control">
+                    <div class="form-group required">
+                        <label for="supp_mail" class="control-label">Email </label>
+                        <input id="supp_mail" type="email" name="supp_mail" value="" placeholder="Enter E-mail" required class="form-control">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="supp_phn">Phone</label>
+                    <div class="form-group required">
+                        <label for="supp_phn" class="control-label">Phone </label>
                         <input id="supp_phn" type="text" name="supp_phn" value="" placeholder="Enter phone" required class="form-control">
                     </div>
                     
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Add New Supplier</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>

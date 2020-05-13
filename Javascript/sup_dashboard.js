@@ -18,7 +18,7 @@ for (i = 0; i < coll.length; i++)
     });
 }
 
-// Modal for "Assign asset" button
+// Modal for "Add a supplier" button
 var modal = document.getElementById("myModal");
 var btn = document.getElementById("myBtn");
 
@@ -70,7 +70,7 @@ var openModal = function()
             console.log("XHR error..!");
         }
 
-        xhr.open("GET", "delete_assign.php?id=" + id + "&sid=" + Math.random(), true);
+        xhr.open("GET", "delete_supplier.php?id=" + id + "&sid=" + Math.random(), true);
         xhr.send();
 
     }, false);

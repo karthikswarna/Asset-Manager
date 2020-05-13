@@ -48,7 +48,7 @@
 
             <tbody class="text-center">
                 <?php $i = 0; foreach($employees as $employee): ?>
-                    <tr>
+                    <tr id="<?php echo $employee['Employee_ID'] ?>">
                         <td>
                             <?php echo ++$i ; ?>
                         </td>
@@ -159,14 +159,46 @@
                                 </table>
                             </div>
 
-                            <button>Delete</button>
+                            <button class="myBtn2">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
+
+        <div id="myModal2" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="yesBtn" class="btn btn-primary">Yes</button>
+                    <button type="button" id="noBtn" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal3" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Employee deleted successfully!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="okBtn" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script src="./Javascript/dash_emp.js"></script>
+    <script src="./Javascript/emp_dashboard.js"></script>
+    <script src="./Javascript/sidebar.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 <!-- Code for sidebar, included in all dashboard files. -->
     <div class="w3-sidebar w3-bar-block w3-border-right" style="display: none" id="mySidebar">
-        <button onclick="w3_close()" class="w3-bar-item w3-large">Close &times;</button>
+        <button class="w3-bar-item w3-large">Close &times;</button>
         
         <hr>
         <img class="profile" alt= "" src="./Images/user.png">

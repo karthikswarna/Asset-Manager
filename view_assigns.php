@@ -17,16 +17,19 @@
         require_once("config.php");
         require_once("dashboard.php");
 
-        $select_stmt = "SELECT DISTINCT p.Name, cat.Category_name, e.Name as emp_name, p.Image, p.Description, c.Barcode, a.Expiry_date
+        // Query to obtain details of all assigned assets.
+        $select_stmt = "SELECT DISTINCT c.Check_ID, p.Name, cat.Category_name, e.Name as emp_name, p.Image, p.Description, c.Barcode, a.Expiry_date
                         FROM ((((checkouts as c
                         INNER JOIN employee as e ON e.Employee_ID = c.Employee_ID)
                         INNER JOIN asset as a ON c.Barcode = a.Barcode)
                         INNER JOIN product as p ON a.Product_ID = p.Product_ID)
-                        INNER JOIN category as cat ON p.Category_ID = cat.Category_ID);";
+                        INNER JOIN category as cat ON p.Category_ID = cat.Category_ID)
+                        WHERE c.checkin_date IS NULL;";
         $select_query = $db_conn->prepare($select_stmt);
         $select_query->execute();
         $rows = $select_query->fetchAll(PDO::FETCH_ASSOC);
-
+        
+        // Query to obtain history of an asset with given :barcode.
         $barcode = "";
         $select_stmt2 = "SELECT DISTINCT e.Name, c.checkout_date, c.checkin_date
                         FROM checkouts as c
@@ -48,7 +51,7 @@
 
             <tbody class="text-center">
                 <?php $i = 0; foreach($rows as $row): ?>
-                    <tr>
+                    <tr id="<?php echo $row['Check_ID'] ?>">
                         <td>
                             <?php echo ++$i ; ?>
                         </td>
@@ -166,15 +169,47 @@
                                 </table>
                             </div>
 
-                            <button>Check-in this item</button>
+                            <button class="myBtn2">Check-in this item</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
 
+        <div id="myModal2" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Are you sure?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="yesBtn" class="btn btn-primary">Yes</button>
+                    <button type="button" id="noBtn" class="btn btn-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="myModal3" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Asset checked-in successfully!</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="okBtn" class="btn btn-primary">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="./Javascript/dashboard.js"></script>
+    <script src="./Javascript/sidebar.js"></script>
     <script src="./Javascript/ajax.js"></script>
 </body>
 </html>

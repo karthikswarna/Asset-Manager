@@ -47,7 +47,7 @@ $sup_query = $db_conn->prepare($sup_stmt);
     <!-- Page Content -->
     <div class="PageContent">
         <div class="w3-container w3-teal">
-            <button style="float: left; padding: 20px;;" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">☰</button>
+            <button style="float: left; padding: 20px;;" id="navLink" class="w3-button w3-teal w3-xlarge">☰</button>
 
             <h1 style="margin-top:1%">Hello, <b><?php echo htmlspecialchars($_SESSION["name"]); ?></b>.</h1>
         </div>
@@ -64,30 +64,30 @@ $sup_query = $db_conn->prepare($sup_stmt);
             <!-- Modal content -->
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add a product</h5>
+                    <h5 class="modal-title">Add a product</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 
-                <form method="POST" name="product_form" action="add_product.php" id="log" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="prod_name">Name </label>
+                <form method="POST" name="product_form" action=<?php echo htmlspecialchars("add_product.php") ?> id="log" enctype="multipart/form-data">
+                    <div class="form-group required">
+                        <label for="prod_name" class="control-label">Name </label>
                         <input id="prod_name" type="text" name="prod_name" value="" placeholder="Enter product's Name" required class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label for="prod_desc">Description </label>
+                    <div class="form-group required">
+                        <label for="prod_desc" class="control-label">Description </label>
                         <input id="prod_desc" type="text" name="prod_desc" value="" placeholder="Enter description" required class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label for="prod_img">Photo  </label>
+                    <div class="form-group required">
+                        <label for="prod_img" class="control-label">Photo </label>
                         <input id="prod_img" type="file" name="prod_img" value="" accept="image/*" placeholder="Upload the photo" required class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label for="prod_cat"> Select the Category </label>
+                    <div class="form-group required">
+                        <label for="prod_cat" class="control-label">Select the Category </label>
                         <select id="prod_cat" name="prod_cat" required class="form-control">
                             <option value="" selected>Choose</option>
                             <?php
@@ -110,8 +110,8 @@ $sup_query = $db_conn->prepare($sup_stmt);
                         <input id="new_cat" type="text" name="new_cat" value="" placeholder="Type a Category" class="form-control">
                     </div>
                     
-                    <div class="form-group">
-                        <label for="prod_sup"> Supplied by &nbsp </label>
+                    <div class="form-group required">
+                        <label for="prod_sup" class="control-label"> Supplied by&nbsp</label>
                         <span style="font-size:14px" class="fa fa-question-circle" data-toggle='tooltip' title="Didn't find the right supplier? Considering adding the supplier details by going into Suppliers tab." aria-hidden="true"></span>
                         <select id="prod_sup" name="prod_sup" required class="form-control">
                             <option value="" selected>Choose</option>
@@ -129,24 +129,28 @@ $sup_query = $db_conn->prepare($sup_stmt);
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="date_sup">Date supplied</label>
+                    <div class="form-group required">
+                        <label for="date_sup" class="control-label">Date supplied </label>
                         <input id="date_sup" type="date" name="date_sup" value="" placeholder="Date at which product is supplied" required class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label for="prod_quant">Quantity supplied</label>
+                    <div class="form-group required">
+                        <label for="prod_quant" class="control-label">Quantity supplied </label>
                         <input id="prod_quant" type="text" name="prod_quant" value="" placeholder="Enter quantity" required class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label for="prod_price">Total price</label>
+                    <div class="form-group required">
+                        <label for="prod_price" class="control-label">Total price </label>
                         <input id="prod_price" type="text" name="prod_price" value="" placeholder="Enter price" required class="form-control">
                     </div>
-
+                    
+                    <div class="form-group required">
+                        <label class="control-label"></label>
+                        <span>Required</span>
+                    </div>
+                    
                     <div class="modal-footer">
                         <button type="submit" name="submit" class="btn btn-primary">Add product</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </form>
             </div>
