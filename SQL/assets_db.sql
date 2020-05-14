@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2020 at 06:30 PM
+-- Generation Time: May 15, 2020 at 12:54 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
 
@@ -54,40 +54,39 @@ DELIMITER ;
 CREATE TABLE `asset` (
   `Barcode` varchar(50) NOT NULL,
   `Product_ID` int(11) NOT NULL,
-  `Availability` tinyint(1) NOT NULL,
-  `Expiry_date` date DEFAULT NULL
+  `Availability` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `asset`
 --
 
-INSERT INTO `asset` (`Barcode`, `Product_ID`, `Availability`, `Expiry_date`) VALUES
-('IITT-13-Water Bottle-1', 13, 1, NULL),
-('IITT-13-Water Bottle-2', 13, 1, NULL),
-('IITT-13-Water Bottle-3', 13, 1, NULL),
-('IITT-13-Water Bottle-4', 13, 1, NULL),
-('IITT-13-Water Bottle-5', 13, 1, NULL),
-('IITT-7-Chairs-1', 7, 0, NULL),
-('IITT-7-Chairs-2', 7, 1, NULL),
-('IITT-7-Chairs-3', 7, 1, NULL),
-('IITT-7-Chairs-4', 7, 1, NULL),
-('IITT-7-Chairs-5', 7, 1, NULL),
-('IITT-HPPavilion-1', 1, 0, NULL),
-('IITT-HPPavilion-2', 1, 0, NULL),
-('IITT-HPPavilion-3', 1, 1, NULL),
-('IITT-HPPavilion-4', 1, 0, NULL),
-('IITT-QuickHeal-1', 3, 0, '2021-07-30'),
-('IITT-Table-1', 2, 1, NULL),
-('IITT-Table-10', 2, 1, NULL),
-('IITT-Table-2', 2, 1, NULL),
-('IITT-Table-3', 2, 1, NULL),
-('IITT-Table-4', 2, 1, NULL),
-('IITT-Table-5', 2, 1, NULL),
-('IITT-Table-6', 2, 1, NULL),
-('IITT-Table-7', 2, 1, NULL),
-('IITT-Table-8', 2, 1, NULL),
-('IITT-Table-9', 2, 1, NULL);
+INSERT INTO `asset` (`Barcode`, `Product_ID`, `Availability`) VALUES
+('IITT-13-Water Bottle-1', 13, 1),
+('IITT-13-Water Bottle-2', 13, 1),
+('IITT-13-Water Bottle-3', 13, 1),
+('IITT-13-Water Bottle-4', 13, 1),
+('IITT-13-Water Bottle-5', 13, 1),
+('IITT-7-Chairs-1', 7, 0),
+('IITT-7-Chairs-2', 7, 1),
+('IITT-7-Chairs-3', 7, 1),
+('IITT-7-Chairs-4', 7, 1),
+('IITT-7-Chairs-5', 7, 1),
+('IITT-HPPavilion-1', 1, 0),
+('IITT-HPPavilion-2', 1, 0),
+('IITT-HPPavilion-3', 1, 1),
+('IITT-HPPavilion-4', 1, 0),
+('IITT-QuickHeal-1', 3, 0),
+('IITT-Table-1', 2, 1),
+('IITT-Table-10', 2, 1),
+('IITT-Table-2', 2, 1),
+('IITT-Table-3', 2, 1),
+('IITT-Table-4', 2, 1),
+('IITT-Table-5', 2, 1),
+('IITT-Table-6', 2, 1),
+('IITT-Table-7', 2, 1),
+('IITT-Table-8', 2, 1),
+('IITT-Table-9', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -160,19 +159,20 @@ CREATE TABLE `employee` (
   `Email` varchar(60) NOT NULL,
   `Work_phone` varchar(20) NOT NULL,
   `Personal_phone` varchar(20) DEFAULT NULL,
-  `Image` varchar(20) DEFAULT NULL
+  `Image` varchar(20) DEFAULT NULL,
+  `Current_employee` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `employee`
 --
 
-INSERT INTO `employee` (`Employee_ID`, `Name`, `Department`, `Email`, `Work_phone`, `Personal_phone`, `Image`) VALUES
-(1, 'Dheeraj', 'Computer Science', 'cs17b028@iittp.ac.in', '408-369', NULL, NULL),
-(2, 'Karthik Chandra', 'Computer Science', 'cs17b026@iittp.ac.in', '408-370', NULL, NULL),
-(3, 'Rohith', 'Electrical engineering', 'ee17b024@iittp.ac.in', '156-547', '7984658942', NULL),
-(12, 'Kedar Krishna', 'Mechanical engineering', 'me17b014@iittp.ac.in', '654-654', '6654831465', '20200501223825.jpg'),
-(20, 'Pavan', 'Electrical Engineering', 'EE17B003@iittp.ac.in', '80746-254-707', '7895641231', NULL);
+INSERT INTO `employee` (`Employee_ID`, `Name`, `Department`, `Email`, `Work_phone`, `Personal_phone`, `Image`, `Current_employee`) VALUES
+(1, 'Dheeraj', 'Computer Science', 'cs17b028@iittp.ac.in', '408-369', NULL, NULL, 1),
+(2, 'Karthik Chandra', 'Computer Science', 'cs17b026@iittp.ac.in', '408-370', NULL, NULL, 1),
+(3, 'Rohith', 'Electrical engineering', 'ee17b024@iittp.ac.in', '156-547', '7984658942', NULL, 1),
+(12, 'Kedar Krishna', 'Mechanical engineering', 'me17b014@iittp.ac.in', '654-654', '6654831465', '20200501223825.jpg', 1),
+(20, 'Pavan', 'Electrical Engineering', 'EE17B003@iittp.ac.in', '80746-254-707', '7895641231', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -186,19 +186,21 @@ CREATE TABLE `product` (
   `Name` varchar(50) NOT NULL,
   `Description` varchar(500) NOT NULL,
   `Total_quantity` int(11) NOT NULL,
-  `Image` varchar(20) NOT NULL
+  `Image` varchar(20) NOT NULL,
+  `Expiry_date` date DEFAULT NULL,
+  `Expired` tinyint(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`Product_ID`, `Category_ID`, `Name`, `Description`, `Total_quantity`, `Image`) VALUES
-(1, 1, 'HP Pavilion Laptop', 'HP Pavilion Laptop with 1TB storage and 16GB RAM', 4, 'HPPavilion.jpg'),
-(2, 2, 'Damro Table', 'A Table provided by Damro furnitures made up of teak', 10, 'Table.jpg'),
-(3, 3, 'Quick Heal Pro', 'An Anti-virus program to protect the computers from viruses', 1, 'QuickHealPro.jpg'),
-(7, 6, 'Chairs', 'Chairs to sit', 5, '20200501170258.jpg'),
-(13, 9, 'Water Bottle', 'Drink water in this', 5, '20200513180326.jpg');
+INSERT INTO `product` (`Product_ID`, `Category_ID`, `Name`, `Description`, `Total_quantity`, `Image`, `Expiry_date`, `Expired`) VALUES
+(1, 1, 'HP Pavilion Laptop', 'HP Pavilion Laptop with 1TB storage and 16GB RAM', 4, 'HPPavilion.jpg', NULL, 0),
+(2, 2, 'Damro Table', 'A Table provided by Damro furnitures made up of teak', 10, 'Table.jpg', NULL, 0),
+(3, 3, 'Quick Heal Pro', 'An Anti-virus program to protect the computers from viruses', 1, 'QuickHealPro.jpg', '2021-07-30', 0),
+(7, 6, 'Chairs', 'Chairs to sit', 5, '20200501170258.jpg', NULL, 0),
+(13, 9, 'Water Bottle', 'Drink water in this', 5, '20200513180326.jpg', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -233,15 +235,16 @@ CREATE TABLE `supplier` (
   `Supplier_ID` int(11) NOT NULL,
   `Supplier_name` varchar(50) NOT NULL,
   `Email` varchar(60) NOT NULL,
-  `Phone_number` varchar(20) NOT NULL
+  `Phone_number` varchar(20) NOT NULL,
+  `Active` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'Represent whether the supplier is active or an old one.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`Supplier_ID`, `Supplier_name`, `Email`, `Phone_number`) VALUES
-(1, 'Kader Enterprises', 'kaderrr@gmail.com', '7463821937');
+INSERT INTO `supplier` (`Supplier_ID`, `Supplier_name`, `Email`, `Phone_number`, `Active`) VALUES
+(1, 'Kader Enterprises', 'kaderrr@gmail.com', '7463821937', 1);
 
 -- --------------------------------------------------------
 

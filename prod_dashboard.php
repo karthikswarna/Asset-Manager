@@ -86,6 +86,11 @@ $sup_query = $db_conn->prepare($sup_stmt);
                         <input id="prod_img" type="file" name="prod_img" value="" accept="image/*" placeholder="Upload the photo" required class="form-control">
                     </div>
 
+                    <div class="form-group">
+                        <label for="exp_date">Expiry Date(leave this if not applicable) </label>
+                        <input id="exp_date" type="date" name="exp_date" value="" placeholder="Expiry date of product" class="form-control">
+                    </div>
+
                     <div class="form-group required">
                         <label for="prod_cat" class="control-label">Select the Category </label>
                         <select id="prod_cat" name="prod_cat" required class="form-control">

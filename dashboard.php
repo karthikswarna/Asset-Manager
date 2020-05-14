@@ -18,7 +18,7 @@ include("config.php");
 
 
 // Query to select the categories.
-$cat_select = "SELECT Category_ID, Category_name FROM category";
+$cat_select = "SELECT Category_ID, Category_name FROM category;";
 $cat_query = $db_conn->prepare($cat_select);
 
 
@@ -26,14 +26,16 @@ $cat_query = $db_conn->prepare($cat_select);
 // Query to select available products.
 $prod_select = "SELECT product.Product_ID, Name, COUNT(Availability) 
                 FROM product 
-                INNER JOIN asset ON product.Product_ID = asset.Product_ID AND asset.Availability = true 
-                GROUP BY Name";
+                INNER JOIN asset ON product.Product_ID = asset.Product_ID AND asset.Availability = true AND product.Expired = false
+                GROUP BY Name;";
 $prod_query = $db_conn->prepare($prod_select);
 
 
 
 // Query to select the employees.
-$emp_select = "SELECT Employee_ID, Name FROM employee";
+$emp_select = "SELECT Employee_ID, Name 
+               FROM employee
+               WHERE Current_employee = true;";
 $emp_query = $db_conn->prepare($emp_select);
 
 ?>

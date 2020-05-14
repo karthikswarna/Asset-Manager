@@ -17,7 +17,7 @@
         require_once("config.php");
         require_once("emp_dashboard.php");
         
-        $select_stmt = "SELECT * FROM employee;";
+        $select_stmt = "SELECT * FROM employee WHERE Current_employee = true;";
         $select_query = $db_conn->prepare($select_stmt);
         $select_query->execute();
         $employees = $select_query->fetchAll(PDO::FETCH_ASSOC);

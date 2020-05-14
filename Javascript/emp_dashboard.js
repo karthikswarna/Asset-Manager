@@ -37,7 +37,7 @@ window.addEventListener('click', function() // When the user clicks anywhere out
 
 
 
-// Modal for "Check-in" button
+// Modal for "Delete" button
 var modal2 = document.getElementById("myModal2");
 var modal3 = document.getElementById("myModal3");
 var yesBtn = document.getElementById("yesBtn");
@@ -49,8 +49,8 @@ var btns = document.getElementsByClassName("myBtn2");
 var openModal = function()
 {
     modal2.style.display = "block";
-    var id = this.parentNode.parentNode.attributes[0].value;
-    console.log(id);
+    var emp_id = this.parentNode.parentNode.attributes[0].value;
+    console.log(emp_id);
 
     // Yes button.
     yesBtn.addEventListener('click', function()
@@ -70,7 +70,7 @@ var openModal = function()
             console.log("XHR error..!");
         }
 
-        xhr.open("GET", "delete_employee.php?id=" + id + "&sid=" + Math.random(), true);
+        xhr.open("GET", "delete_employee.php?emp_id=" + emp_id + "&sid=" + Math.random(), true);
         xhr.send();
 
     }, false);

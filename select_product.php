@@ -5,7 +5,8 @@
 
     if(!isset($cat_id) || !is_numeric($cat_id))
     {
-        echo "Data Error";
+        $error = array("catErr" => "Internal server Error, try again later!");
+        include("error.php");
         exit;
     }
 
@@ -16,7 +17,7 @@
         // Query to select available products for 'All Categories'(cat_id = 0).
         $prod_select = "SELECT product.Product_ID, Name, COUNT(Availability) 
                         FROM product 
-                        INNER JOIN asset ON product.Product_ID = asset.Product_ID AND asset.Availability = true 
+                        INNER JOIN asset ON product.Product_ID = asset.Product_ID AND asset.Availability = true AND product.Expired = false
                         GROUP BY Name";
         $prod_query = $db_conn->prepare($prod_select);
 
@@ -28,7 +29,7 @@
         // Query to select available products for a specific category(cat_id > 0).
         $prod_select = "SELECT product.Product_ID, Name, COUNT(Availability) 
                         FROM product 
-                        INNER JOIN asset ON product.Product_ID = asset.Product_ID AND asset.Availability = true
+                        INNER JOIN asset ON product.Product_ID = asset.Product_ID AND asset.Availability = true AND product.Expired = false
                         WHERE product.Category_ID = :category_id
                         GROUP BY Name";
         $prod_query = $db_conn->prepare($prod_select);

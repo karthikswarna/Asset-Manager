@@ -17,7 +17,7 @@
         require_once("config.php");
         require_once("sup_dashboard.php");
         
-        $select_stmt = "SELECT * FROM supplier;";
+        $select_stmt = "SELECT * FROM supplier WHERE Active = true;";
         $select_query = $db_conn->prepare($select_stmt);
         $select_query->execute();
         $suppliers = $select_query->fetchAll(PDO::FETCH_ASSOC);

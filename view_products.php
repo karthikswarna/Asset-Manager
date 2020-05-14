@@ -39,6 +39,7 @@
                     <th>Description</th>
                     <th>Photo</th>
                     <th>Total Quantity</th>
+                    <th>Expiry Date</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -61,7 +62,18 @@
                         <td>
                             <?php echo $product['Total_quantity'];?>
                         </td>
-                        
+                        <td>
+                            <?php 
+                                if(empty(trim($product['Expiry_date'])))
+                                {
+                                    echo "Not applicable";
+                                }
+                                else
+                                {
+                                    echo $product['Expiry_date'];
+                                }
+                            ?>
+                        </td>
                         <td>
                             <button type="button" class="collapsible">History</button>
                             <div class="content">

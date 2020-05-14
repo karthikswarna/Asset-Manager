@@ -6,7 +6,7 @@ include("test_input.php");
 
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
-    $error = array("dateErr"=>"", "quantErr"=>"", "priceErr"=>"", "imgErr"=>"");
+    $error = array("expErr"=>"", "dateErr"=>"", "quantErr"=>"", "priceErr"=>"", "imgErr"=>"");
     $uploadOk = 1;
 
     $prod_name = test_input($_POST['prod_name']); //Sanitizing product name. 
@@ -23,6 +23,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         exit;
     }
 
+    // Validating expiry date.
+    $exp_date = $_POST['exp_date'];
+    list($y, $m, $d) = explode('-', $exp_date);
+    if(!checkdate($m, $d, $y))
+    {
+        $error["expErr"] = "Expiry Date Error - Invalid format";
+        $uploadOk = 0;
+    }
 
     // Validating date.
     $date_sup = $_POST['date_sup'];
@@ -125,6 +133,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                     LIMIT 1;";
         $check_query = $db_conn->prepare($check_stmt);
         $check_query->execute();
+        $check_query->closeCursor();
 
         if($check_query->rowCount() == 0)
         {
@@ -132,6 +141,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                             VALUES (?);";
             $insert_query = $db_conn->prepare($insert_stmt);
             $insert_query->execute([$prod_cat]);
+            $insert_query->closeCursor();
         }
 
 
@@ -142,14 +152,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $select_query = $db_conn->prepare($select_stmt);
         $select_query->execute();
         $prod_cat_id = $select_query->fetch(PDO::FETCH_ASSOC);
+        $select_query->closeCursor();
         $prod_cat_id = $prod_cat_id['Category_ID'];
 
 
         // Insert products into database.
-        $insert_stmt = "INSERT INTO product (Category_ID, Name, Description, Total_quantity, Image)
-                        VALUES (?, ?, ?, ?, ?);";
+        $insert_stmt = "INSERT INTO product (Category_ID, Name, Description, Total_quantity, Image, Expiry_date)
+                        VALUES (?, ?, ?, ?, ?, ?);";
         $insert_query = $db_conn->prepare($insert_stmt);
-        $insert_query->execute([$prod_cat_id, $prod_name, $prod_desc, $prod_quant, $new_file_name]);
+        $insert_query->execute([$prod_cat_id, $prod_name, $prod_desc, $prod_quant, $new_file_name, $exp_date]);
+        $insert_query->closeCursor();
 
 
         // Get the product Id of the current product from DB.
@@ -159,18 +171,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
         $select_query = $db_conn->prepare($select_stmt);
         $select_query->execute();
         $prod_id = $select_query->fetch(PDO::FETCH_ASSOC);
+        $select_query->closeCursor();
         $prod_id = $prod_id['Product_ID'];
 
 
         // Insert total quantity of assets into DB with their barcodes.
-        $insert_stmt = "INSERT INTO asset (Barcode, Product_ID, Availability, Expiry_date)
-                        VALUES (?, ?, ?, ?);";
+        $insert_stmt = "INSERT INTO asset (Barcode, Product_ID, Availability)
+                        VALUES (?, ?, ?);";
         $insert_query = $db_conn->prepare($insert_stmt);
         for($i = 1; $i <= (int)$prod_quant; $i++)
         {
             $barcode = "IITT-" . $prod_id . "-" . $prod_name . "-" . $i;
-            $insert_query->execute([$barcode, $prod_id, true, null]);
+            $insert_query->execute([$barcode, $prod_id, true]);
         }
+        $insert_query->closeCursor();
 
 
         // Insert entry into suppliedproduct table.
@@ -178,14 +192,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                         VALUES (?, ?, ?, ?, ?);";
         $insert_query = $db_conn->prepare($insert_stmt);
         $insert_query->execute([$prod_sup_id, $prod_id, $date_sup, $prod_quant, $prod_price]);
-    
+        $insert_query->closeCursor();
     
         $db_conn->commit();
     }
     catch(PDOException $e)
     {
         $db_conn->rollBack();
-        die($e->getMessage);
+        $error = array("delErr"=>$e->getMessage());
+        include("error.php");
+        exit;
     }
 }
 

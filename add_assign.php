@@ -72,7 +72,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     catch(PDOException $e)
     {
         $db_conn->rollBack();
-        die($e->getMessage());
+        $error = array("addErr"=>$e->getMessage());
+        include("error.php");
+        exit;;
     }
 }
 

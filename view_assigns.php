@@ -18,7 +18,7 @@
         require_once("dashboard.php");
 
         // Query to obtain details of all assigned assets.
-        $select_stmt = "SELECT DISTINCT c.Check_ID, p.Name, cat.Category_name, e.Name as emp_name, p.Image, p.Description, c.Barcode, a.Expiry_date
+        $select_stmt = "SELECT DISTINCT c.Check_ID, p.Name, cat.Category_name, e.Name as emp_name, p.Image, p.Description, c.Barcode, p.Expiry_date
                         FROM ((((checkouts as c
                         INNER JOIN employee as e ON e.Employee_ID = c.Employee_ID)
                         INNER JOIN asset as a ON c.Barcode = a.Barcode)

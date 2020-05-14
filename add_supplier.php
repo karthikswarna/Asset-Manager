@@ -52,13 +52,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
                         VALUES (?, ?, ?);";
         $insert_query = $db_conn->prepare($insert_stmt);
         $insert_query->execute([$supp_name, $supp_mail, $supp_phn]);
-    
+        $insert_query->closeCursor();
+        
         $db_conn->commit();
     }
     catch(PDOException $e)
     {
         $db_conn->rollBack();
-        die($e->getMessage());
+        $error = array("delErr"=>$e->getMessage());
+        include("error.php");
+        exit;
     }
 }
 

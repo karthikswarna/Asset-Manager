@@ -49,8 +49,8 @@ var btns = document.getElementsByClassName("myBtn2");
 var openModal = function()
 {
     modal2.style.display = "block";
-    var id = this.parentNode.parentNode.attributes[0].value;
-    console.log(id);
+    var prod_id = this.parentNode.parentNode.attributes[0].value;
+    console.log(prod_id);
 
     // Yes button.
     yesBtn.addEventListener('click', function()
@@ -70,7 +70,7 @@ var openModal = function()
             console.log("XHR error..!");
         }
 
-        xhr.open("GET", "delete_product.php?id=" + id + "&sid=" + Math.random(), true);
+        xhr.open("GET", "delete_product.php?prod_id=" + prod_id + "&sid=" + Math.random(), true);
         xhr.send();
 
     }, false);
