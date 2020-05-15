@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id']))
     {
         // If server error occurs, only show that error and exit.
         $error = array("checkinErr" => "Internal server Error, try again later!");
-        include("error.php");
+        echo json_encode($error);
         exit;
     }
 
@@ -67,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['id']))
     {
         $db_conn->rollBack();
         $error = array("checkinErr"=>$e->getMessage());
-        include("error.php");
+        echo json_encode($error);
         exit;
     }
 }

@@ -58,6 +58,14 @@ var openModal = function()
         var xhr = new XMLHttpRequest();
         xhr.onload = function()
         {
+            var txt = xhr.responseText;
+            console.log(txt);
+            if(txt[2] !== "<")
+            {    
+                txt = JSON.parse(txt);
+                window.location.href = "/1/error.php?error=" + JSON.stringify(txt);
+            }
+
             if (this.status == 200)
             {
                 modal3.style.display = "block";

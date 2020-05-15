@@ -18,7 +18,7 @@ for (i = 0; i < coll.length; i++)
     });
 }
 
-// Modal for "Assign asset" button
+// Modal for "Add Employee" button
 var modal = document.getElementById("myModal");
 var btn = document.getElementById("myBtn");
 
@@ -60,6 +60,14 @@ var openModal = function()
         {
             if (this.status == 200)
             {
+                var txt = xhr.responseText;
+                console.log(txt);
+                if(txt[2] !== "<")
+                {    
+                    txt = JSON.parse(txt);
+                    window.location.href = "/1/error.php?error=" + JSON.stringify(txt);
+                }
+
                 modal3.style.display = "block";
                 modal2.style.display = "none";
             }

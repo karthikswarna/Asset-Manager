@@ -6,7 +6,7 @@ include("config.php");
 if($_SERVER["REQUEST_METHOD"] == "POST")
 {
     $category_id = $_POST["category"];
-    if(!filter_var($category_id, FILTER_VALIDATE_INT))
+    if(!is_numeric($category_id))
     {
         $error = array("catErr" => "Internal server Error, try again later!");
         include("error.php");
@@ -14,7 +14,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
 
     $product_id = $_POST["product"];
-    if(!filter_var($product_id, FILTER_VALIDATE_INT))
+    if(!is_numeric($product_id))
     {
         $error = array("prodErr" => "Internal server Error, try again later!");
         include("error.php");
@@ -22,7 +22,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
     }
 
     $employee_id = $_POST["assignee"];
-    if(!filter_var($employee_id, FILTER_VALIDATE_INT))
+    if(!is_numeric($employee_id))
     {
         $error = array("empErr" => "Internal server Error, try again later!");
         include("error.php");

@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['emp_id']))
     {
         // If server error occurs, only show that error and exit.
         $error = array("delErr" => "Internal server Error, try again later!");
-        include("error.php");
+        echo json_encode($error);
         exit;
     }
 
@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['emp_id']))
             // Update the status of employee as not current.
             $update_stmt = "UPDATE employee
                             SET Current_employee = false
-                            WHERE Employee_ID = '$emp_id;";
+                            WHERE Employee_ID = '$emp_id';";
             $update_query = $db_conn->prepare($update_stmt);
             $update_query->execute();
             $update_query->closeCursor();
@@ -44,11 +44,11 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['emp_id']))
         
         $db_conn->commit();
     }
-    catch(PDOException $e)
+    catch(Exception $e)
     {
         $db_conn->rollBack();
         $error = array("delErr"=>$e->getMessage());
-        include("error.php");
+        echo json_encode($error);
         exit;
     }
 }

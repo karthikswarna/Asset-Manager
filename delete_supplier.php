@@ -10,7 +10,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['sup_id']))
     {
         // If server error occurs, only show that error and exit.
         $error = array("delErr" => "Internal server Error, try again later!");
-        include("error.php");
+        echo json_encode($error);
         exit;
     }
 
@@ -21,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['sup_id']))
         // Update the status of supplier as not active.
         $update_stmt = "UPDATE supplier
                         SET Active = false
-                        WHERE Supplier_ID = '$sup_id;";
+                        WHERE Supplier_ID = '$sup_id';";
         $update_query = $db_conn->prepare($update_stmt);
         $update_query->execute();
         $update_query->closeCursor();
@@ -32,7 +32,7 @@ if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['sup_id']))
     {
         $db_conn->rollBack();
         $error = array("delErr"=>$e->getMessage());
-        include("error.php");
+        echo json_encode($error);
         exit;
     }
 }

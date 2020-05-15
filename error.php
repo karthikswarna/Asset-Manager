@@ -13,6 +13,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true)
     exit;
 }
 
+if($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['error']))
+{
+    $error = json_decode($_GET['error']);
+}
+
 ?>
 
 <!DOCTYPE html>
