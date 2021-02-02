@@ -20,4 +20,4 @@
 
 
 
-### NOTE: This is neither a production ready implementation nor will be updated in the future. The only purpose of this project is to get familiar with applications involving databases. 
+### NOTE: This is neither a production ready implementation nor will be updated in the future. The only purpose of this project was to get familiar with applications involving databases. 
